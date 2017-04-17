@@ -61,7 +61,6 @@ def resize_for_new_nodes(new_total_nodes, k8s, cluster, test=False):
             time.sleep(wait_time)
             populate(k8s)
 
-
 def resize_for_new_nodes_test(new_total_nodes, k8s, cluster):
     resize_for_new_nodes(new_total_nodes, k8s, cluster, True)
 
@@ -99,7 +98,7 @@ def scale(options):
 
     scale_logger.info("Total nodes in the cluster: %i", len(k8s.nodes))
     scale_logger.info(
-        "%i nodes are unschedulable at this time", k8s.get_num_unschedulable())
+        "%i nodes are unschedulable at this time", k8s.get_num_schedulable())
     scale_logger.info("Found %i critical nodes",
                       len(k8s.nodes) - len(nodes))
     scale_logger.info("Recommending total %i nodes for service", goal)

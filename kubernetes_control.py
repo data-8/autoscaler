@@ -36,17 +36,6 @@ class k8s_control:
         self.critical_node_number = len(self.critical_node_names)
         self.noncritical_nodes = list(filter(lambda node: node.metadata.name not in self.critical_node_names,
                                              self.nodes))
-        self.image_urls = self.get_image_urls()
-
-    def get_image_urls(self):
-        result = set()
-        for pod in self.pods:
-            env = pod.spec.containers[0].env
-            if env:
-                for entry in env:
-                    if entry.name == 'SINGLEUSER_IMAGE':
-                        result.add(entry.value)
-        return result
 
     def configure_new_context(self, new_context):
         """ Loads .kube config to instantiate kubernetes
@@ -153,10 +142,9 @@ class k8s_control:
         return self.context
 
     def get_num_schedulable(self):
-        """Return number of nodes schedulable AND NOT
-        IN THE LIST OF CRITICAL NODES"""
+        """Return number of nodes schedulable"""
         result = 0
-        for node in self.noncritical_nodes:
+        for node in self.nodes:
             if not node.spec.unschedulable:
                 result += 1
         return result
@@ -182,11 +170,3 @@ if __name__ == "__main__":
     print("Current memory usage is %i" % k8s.get_total_cluster_memory_usage())
     print("Total memory capacity is %i" %
           k8s.get_total_cluster_memory_capacity())
-
-
-def get_test_k8s():
-    import settings
-    options = settings.settings()
-    options.context = options.default_context
-    k8s = k8s_control(options)
-    return k8s
