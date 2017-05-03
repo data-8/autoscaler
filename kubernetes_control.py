@@ -124,7 +124,8 @@ class k8s_control:
         pods can be scheduled on any node that meets its Request criteria"""
         total_mem_capacity = 0
         for node in self.nodes:
-            total_mem_capacity += get_node_memory_capacity(node)
+            if not node.spec.unschedulable:
+                total_mem_capacity += get_node_memory_capacity(node)
         return total_mem_capacity
 
     def get_critical_node_names(self):
