@@ -123,7 +123,7 @@ def scale(options):
         shutdown_empty_nodes(nodes, k8s, cluster)
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-v", "--verbose", help="Show verbose output (debug)", action="store_true")
@@ -179,3 +179,7 @@ if __name__ == "__main__":
         scale(options)
     except KeyboardInterrupt:
         pass
+
+if __name__ == "__main__"::
+    main()
+
