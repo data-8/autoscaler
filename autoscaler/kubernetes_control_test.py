@@ -5,7 +5,7 @@
 from kubernetes import client
 import logging
 
-from kubernetes_control import k8s_control
+from .kubernetes_control import k8s_control
 
 scale_logger = logging.getLogger("scale")
 logging.getLogger("kubernetes").setLevel(logging.WARNING)

@@ -6,7 +6,7 @@ import sys
 
 from kubernetes import client, config
 
-from utils import get_pod_host_name, get_pod_memory_request, \
+from .utils import get_pod_host_name, get_pod_memory_request, \
     get_node_memory_capacity, check_list_intersection
 
 scale_logger = logging.getLogger("scale")
