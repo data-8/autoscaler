@@ -22,6 +22,7 @@ class cluster_control:
     def list_managed_instances(self):
         pass
 
+
 class gce_cluster_control(cluster_control):
 
     """Abstracts cluster scaling logic. Currently will

@@ -24,7 +24,7 @@ def __update_nodes(k8s, nodes, unschedulable):
 
 def update_unschedulable(number_unschedulable, nodes, k8s, calculate_priority=None):
     """Attempt to make sure given number of
-    nodes are blocked, if possible; 
+    nodes are blocked, if possible;
     return number of nodes newly blocked; negative
     value means the number of nodes unblocked
 
@@ -41,7 +41,7 @@ def update_unschedulable(number_unschedulable, nodes, k8s, calculate_priority=No
     scale_logger.info(
         "Updating unschedulable flags to ensure %i nodes are unschedulable", number_unschedulable)
 
-    if calculate_priority == None:
+    if calculate_priority is None:
         # Default implementation based on get_pods_number_on_node
         def calculate_priority(node): return k8s.get_pods_number_on_node(node)
 

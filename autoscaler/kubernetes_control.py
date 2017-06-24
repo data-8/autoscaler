@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 
 """Provides read and write access to Kubernetes API"""
 import logging
@@ -112,8 +112,7 @@ class k8s_control:
         self.v1.patch_node(node_name, new_node)
 
     def get_total_cluster_memory_usage(self):
-        """Gets the total memory usage of 
-        all student pods"""
+        """Gets the total memory usage of all student pods"""
         total_mem_usage = 0
         for pod in self.pods:
             total_mem_usage += get_pod_memory_request(pod)

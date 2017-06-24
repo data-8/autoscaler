@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 
 """Kubernetes API access functions"""
 
@@ -40,7 +40,7 @@ def get_pod_memory_request(pod):
 
 
 def get_node_memory_capacity(node):
-    """Converts the specific memory entry 
+    """Converts the specific memory entry
     of the kubernetes API into the byte capacity"""
     return convert_size(node.status.capacity['memory'])
 
@@ -119,7 +119,7 @@ def populate_pods(pool_name, url):
     cmd = [current_dir + '/populate.bash', pool_name, url]
     print(' '.join(cmd))
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
-    _ = p.read()
+    p.read()
     p.close()
 
 
@@ -131,10 +131,10 @@ def user_confirm(prompt=None, resp=False):
     user simply types ENTER.
 
     >>> confirm(prompt='Create Directory?', resp=True)
-    Create Directory? [y]|n: 
+    Create Directory? [y]|n:
     True
     >>> confirm(prompt='Create Directory?', resp=False)
-    Create Directory? [n]|y: 
+    Create Directory? [n]|y:
     False
     >>> confirm(prompt='Create Directory?', resp=False)
     Create Directory? [n]|y: y

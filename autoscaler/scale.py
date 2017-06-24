@@ -11,7 +11,7 @@ from workload import schedule_goal
 from update_nodes import update_unschedulable
 from cluster_update import gce_cluster_control
 from settings import settings
-from utils import user_confirm
+from utils import user_confirm as confirm
 from kubernetes_control import k8s_control
 from kubernetes_control_test import k8s_control_test
 from slack_message import slack_handler
@@ -126,19 +126,49 @@ def scale(options):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-v", "--verbose", help="Show verbose output (debug)", action="store_true")
+        "-v", "--verbose",
+        help="Show verbose output (debug)",
+        action="store_true"
+    )
     parser.add_argument(
-        "-T", "--test", help="Run the script in TEST mode, log expected behavior, no real action will be taken", action="store_true")
+        "-T",
+        "--test",
+        help="Run the script in TEST mode, log expected behavior, \
+        no real action will be taken",
+        action="store_true"
+    )
     parser.add_argument(
-        "--test-k8s", help="Run the script to test kubernetes actions: log expected commands to kubernetes, no real action on node specs", action="store_true")
+        "--test-k8s",
+        help="Run the script to test kubernetes actions: \
+              log expected commands to kubernetes, no real action \
+              on node specs",
+        action="store_true"
+    )
     parser.add_argument(
-        "--test-cloud", help="Run the script to test cloud actions: log expected commands to the cloud provider, no real action on actual VM pool", action="store_true")
+        "--test-cloud",
+        help="Run the script to test cloud actions: \
+              log expected commands to the cloud provider, \
+              no real action on actual VM pool",
+        action="store_true"
+    )
     parser.add_argument(
-        "-y", help="Run the script without user interactive confirmation", action="store_true")
+        "-y",
+        help="Run the script without user interactive confirmation",
+        action="store_true"
+    )
     parser.add_argument(
-        "-c", "--context", required=True, help="A unique segment in the context name to specify which to use to instantiate Kubernetes")
+        "-c",
+        "--context",
+        required=True,
+        help="A unique segment in the context name to specify which to \
+        use to instantiate Kubernetes"
+    )
     parser.add_argument(
-        "--context-for-cloud", help="An optional different unique segment in the managed pool name to specify which to use to when resizing cloud managed pools", default="")
+        "--context-for-cloud",
+        help="An optional different unique segment in the managed pool \
+        name to specify which to use to when resizing cloud managed pools",
+        default=""
+    )
     args = parser.parse_args()
     if args.verbose:
         scale_logger.setLevel(logging.DEBUG)
@@ -166,9 +196,8 @@ def main():
                 "Running in test kubernetes mode, no action on node specs")
 
     if args.y:
-        confirm = lambda x, y=False: True
-    else:
-        confirm = user_confirm
+        def confirm(x, y=False):
+            return True
 
     options.context = args.context
     if args.context_for_cloud != "":
@@ -180,6 +209,6 @@ def main():
     except KeyboardInterrupt:
         pass
 
-if __name__ == "__main__"::
-    main()
 
+if __name__ == "__main__":
+    main()

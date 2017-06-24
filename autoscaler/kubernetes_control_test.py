@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 
 """Provides read and write access to Kubernetes API"""
 
@@ -24,7 +24,7 @@ class k8s_control_test(k8s_control):
         scale_logger.debug(
             "Setting %s node's unschedulable property to %r", node_name, value)
         assert node_name not in self.critical_node_names
-        new_node = client.V1Node(
+        client.V1Node(
             api_version="v1",
             kind="Node",
             metadata=client.V1ObjectMeta(name=node_name),
