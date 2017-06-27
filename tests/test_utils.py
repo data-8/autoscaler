@@ -1,5 +1,6 @@
 import pytest
 from autoscaler import utils
+from .testing_utils import check_expected
 
 
 # from https://goodcode.io/articles/python-dict-object/
@@ -25,11 +26,7 @@ class TestUtil(object):
         ('12 foo', ValueError)
     ])
     def test_human2bytes(self, test_input, expected):
-        if isinstance(expected, int):
-            assert utils.human2bytes(test_input) == expected
-        else:
-            with pytest.raises(expected):
-                utils.human2bytes(test_input)
+        check_expected(utils.human2bytes, [test_input], int, expected)
 
     @pytest.mark.parametrize("test_input,expected", [
         ('0', 0),
@@ -46,11 +43,7 @@ class TestUtil(object):
         ('345.324235543', ValueError)
     ])
     def test_convert_size(self, test_input, expected):
-        if isinstance(expected, int):
-            assert utils.convert_size(test_input) == expected
-        else:
-            with pytest.raises(expected):
-                utils.convert_size(test_input)
+        check_expected(utils.convert_size, [test_input], int, expected)
 
     @pytest.mark.parametrize("list1,list2,expected", [
         ([1, 2, 3], [4, 5, 6], False),
@@ -62,8 +55,8 @@ class TestUtil(object):
         (None, None, False)
     ])
     def test_check_list_intersection(self, list1, list2, expected):
-        assert utils.check_list_intersection(list1, list2) == expected and \
-               utils.check_list_intersection(list2, list1) == expected
+        check_expected(utils.check_list_intersection, [list1, list2], bool, expected)
+        check_expected(utils.check_list_intersection, [list2, list1], bool, expected)
 
     def test_user_confirm(self, capsys):
         input_return = ''
@@ -115,8 +108,39 @@ class TestUtil(object):
         (objdict(status2=objdict(capacity=dict(memory='1 k'))), AttributeError),
     ])
     def test_get_node_memory_capacity(self, node, expected):
-        if isinstance(expected, int):
-            assert utils.get_node_memory_capacity(node) == expected
-        else:
-            with pytest.raises(expected):
-                utils.get_node_memory_capacity(node)
+        check_expected(utils.get_node_memory_capacity, [node], int, expected)
+
+    @pytest.mark.parametrize("pod,expected", [
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='0')))])), 0),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='12345')))])), 12345),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='0 B')))])), 0),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='1 K')))])), 1024),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='1 M')))])), 1048576),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='1 Gi')))])), 1073741824),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='1 tera')))])), 1099511627776),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='0.5kilo')))])), 512),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='0.1  byte')))])), 0),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='1 k')))])), 1024),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='12 foo')))])), ValueError),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory='345.324235543')))])), ValueError),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests=dict(memory2='1 k')))])), 0),
+        (objdict(spec=objdict(containers=[objdict(resources=objdict(requests2=dict(memory='1 k')))])), AttributeError),
+        (objdict(spec=objdict(containers=[objdict(resources2=objdict(requests=dict(memory='1 k')))])), AttributeError),
+        (objdict(spec=objdict(containers2=[objdict(resources=objdict(requests=dict(memory='1 k')))])), AttributeError),
+        (objdict(spec2=objdict(containers=[objdict(resources=objdict(requests=dict(memory='1 k')))])), AttributeError)
+    ])
+    def test_get_pod_memory_request(self, pod, expected):
+        # pod.spec.containers[0].resources.requests['memory']
+        check_expected(utils.get_pod_memory_request, [pod], int, expected)
+
+    @pytest.mark.parametrize("pod,expected", [
+        (objdict(spec=objdict(node_name='pod1')), 'pod1'),
+        (objdict(spec=objdict(node_name='hello world')), 'hello world'),
+        (objdict(spec=objdict(node_name='I324K.9*()&$*(^(#*JDSKsdf_+}{:">?<>,/.;\'[]\\|')), 'I324K.9*()&$*(^(#*JDSKsdf_+}{:">?<>,/.;\'[]\\|'),
+        (objdict(spec=objdict(node_name='')), ''),
+        (objdict(spec=objdict(node_name1='')), AttributeError),
+        (objdict(spec2=objdict(node_name='')), AttributeError)
+    ])
+    def test_get_pod_host_name(self, pod, expected):
+        # pod.spec.node_name
+        check_expected(utils.get_pod_host_name, [pod], str, expected)
