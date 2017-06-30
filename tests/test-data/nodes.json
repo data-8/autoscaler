@@ -25,6 +25,7 @@
                 "uid": "5d3e31aa-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "8095938352225820600",
                 "podCIDR": "10.44.4.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-0zc0"
@@ -211,6 +212,7 @@
                 "uid": "5c6fd758-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "2427549405270876088",
                 "podCIDR": "10.44.0.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-17c7"
@@ -397,6 +399,7 @@
                 "uid": "5d66e01e-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "3396404850842509240",
                 "podCIDR": "10.44.5.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-2zbs"
@@ -571,6 +574,7 @@
                 "uid": "5cb022d3-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "2850962360940732344",
                 "podCIDR": "10.44.1.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-8pbd"
@@ -740,6 +744,7 @@
                 "uid": "5cde026c-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "6481763829912018872",
                 "podCIDR": "10.44.2.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-f31s"
@@ -920,6 +925,7 @@
                 "uid": "5f3caaa3-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "1930942132338663352",
                 "podCIDR": "10.44.10.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-j3m8"
@@ -1106,6 +1112,7 @@
                 "uid": "633abcd1-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "6772505499211505592",
                 "podCIDR": "10.44.12.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-kz7z"
@@ -1260,6 +1267,7 @@
                 "uid": "5e1994d7-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "2300024318649802680",
                 "podCIDR": "10.44.8.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-n3wb"
@@ -1429,6 +1437,7 @@
                 "uid": "5df02f27-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "768090981171044280",
                 "podCIDR": "10.44.7.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-nxzf"
@@ -1609,6 +1618,7 @@
                 "uid": "5f89299f-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "8604185699494764472",
                 "podCIDR": "10.44.11.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-q8g0"
@@ -1778,6 +1788,7 @@
                 "uid": "5e4bbf70-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "7699367194104274872",
                 "podCIDR": "10.44.9.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-qgpb"
@@ -1952,6 +1963,7 @@
                 "uid": "5d2f3509-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "8193273143060701112",
                 "podCIDR": "10.44.3.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-tfrz"
@@ -2131,6 +2143,7 @@
                 "uid": "5da748d9-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "2173041905441546168",
                 "podCIDR": "10.44.6.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-v0kp"
@@ -2285,6 +2298,7 @@
                 "uid": "6223e453-3514-11e7-8de1-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "7551758672901170735",
                 "podCIDR": "10.44.14.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-wvjl"
@@ -2527,6 +2541,7 @@
                 "uid": "631f9582-3514-11e7-8de1-42010af0002a"
             },
             "spec": {
+                "unschedulable": "False",
                 "externalID": "8408403029803394640",
                 "podCIDR": "10.44.21.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-wwk5"

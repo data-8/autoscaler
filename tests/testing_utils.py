@@ -34,5 +34,7 @@ def json_to_object(file_name):
 
 def log_output(file_name, output):
     # logs a str output to a file
+    if not isinstance(output, str):
+        output = str(output)
     with open('tests/logs/{}.txt'.format(file_name), 'a+') as file:
         file.write(output + "\n\n")

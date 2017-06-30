@@ -23,7 +23,7 @@ class k8s_control_test(k8s_control):
         """Set the spec key 'unschedulable'"""
         scale_logger.debug(
             "Setting %s node's unschedulable property to %r", node_name, value)
-        assert node_name not in self.critical_node_names
+        assert node_name not in self.get_critical_node_names()
         client.V1Node(
             api_version="v1",
             kind="Node",

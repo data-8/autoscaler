@@ -192,23 +192,3 @@ class k8s_control:
 
     def get_max_utilization(self):
         return self._options.max_utilization
-
-
-if __name__ == "__main__":
-    import settings
-    options = settings.settings()
-    options.context = options.default_context
-    k8s = k8s_control(options)
-    print("Displaying information of cluster %s\n" % k8s.get_cluster_name())
-    k8s.show_nodes_status()
-    print("Current memory usage is %i" % k8s.get_total_cluster_memory_usage())
-    print("Total memory capacity is %i" %
-          k8s.get_total_cluster_memory_capacity())
-
-
-def get_test_k8s():
-    import settings
-    options = settings.settings()
-    options.context = options.default_context
-    k8s = k8s_control(options)
-    return k8s
