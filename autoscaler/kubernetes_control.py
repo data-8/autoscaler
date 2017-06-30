@@ -27,18 +27,18 @@ class k8s_control:
     def __init__(self, options):
         """ Needs to be initialized with options as an
         instance of settings"""
-        self.context = self.configure_new_context(options.context)
+        self.context = self._configure_new_context(options.context)
         self.options = options
         self.v1 = client.CoreV1Api()
-        self.pods = self.get_pods()
-        self.nodes = self.get_nodes()
-        self.critical_node_names = self.get_critical_node_names()
+        self.pods = self._get_pods()
+        self.nodes = self._get_nodes()
+        self.critical_node_names = self._get_critical_node_names()
         self.critical_node_number = len(self.critical_node_names)
         self.noncritical_nodes = list(filter(lambda node: node.metadata.name not in self.critical_node_names,
                                              self.nodes))
-        self.image_urls = self.get_image_urls()
+        self.image_urls = self._get_image_urls()
 
-    def get_image_urls(self):
+    def _get_image_urls(self):
         result = set()
         for pod in self.pods:
             env = pod.spec.containers[0].env
@@ -48,7 +48,7 @@ class k8s_control:
                         result.add(entry.value)
         return result
 
-    def configure_new_context(self, new_context):
+    def _configure_new_context(self, new_context):
         """ Loads .kube config to instantiate kubernetes
         with specified context"""
         contexts, _ = config.list_kube_config_contexts()
@@ -67,12 +67,12 @@ class k8s_control:
         config.load_kube_config(context=context_to_activate)
         return context_to_activate
 
-    def get_nodes(self):
+    def _get_nodes(self):
         """Return a list of v1.Node"""
         scale_logger.debug("Getting all nodes in the cluster")
         return self.v1.list_node().items
 
-    def get_pods(self):
+    def _get_pods(self):
         """Return a list of v1.Pod that needn't be omitted"""
         result = []
         scale_logger.debug("Getting all pods in all namespaces")
@@ -127,7 +127,7 @@ class k8s_control:
                 total_mem_capacity += get_node_memory_capacity(node)
         return total_mem_capacity
 
-    def get_critical_node_names(self):
+    def _get_critical_node_names(self):
         """Return a list of nodes where critical pods
         are running"""
         result = []
