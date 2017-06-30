@@ -17,110 +17,11 @@ from .kubernetes_control_test import k8s_control_test
 from .slack_message import slack_handler
 from .populate import populate
 
+
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s')
 scale_logger = logging.getLogger("scale")
 slack_logger = logging.getLogger("slack")  # used for slack message only
-
-
-def shutdown_empty_nodes(nodes, k8s, cluster, test=False):
-    """
-    Search through all nodes and shut down those that are unschedulable
-    and devoid of non-critical pods
-
-    CRITICAL NODES SHOULD NEVER BE INCLUDED IN THE INPUT LIST
-    """
-    count = 0
-    for node in nodes:
-        if k8s.get_pods_number_on_node(node) == 0 and node.spec.unschedulable:
-            if confirm(("Shutting down empty node: %s" % node.metadata.name)):
-                scale_logger.info(
-                    "Shutting down empty node: %s", node.metadata.name)
-                if not test:
-                    count += 1
-                    cluster.shutdown_specified_node(node.metadata.name)
-    if count > 0:
-        scale_logger.info("Shut down %d empty nodes", count)
-        slack_logger.info("Shut down %d empty nodes", count)
-
-
-def shutdown_empty_nodes_test(nodes, k8s, cluster):
-    shutdown_empty_nodes(nodes, k8s, cluster, True)
-
-
-def resize_for_new_nodes(new_total_nodes, k8s, cluster, test=False):
-    """create new nodes to match new_total_nodes required
-    only for scaling up"""
-    if confirm(("Resizing up to: %d nodes" % new_total_nodes)):
-        scale_logger.info("Resizing up to: %d nodes", new_total_nodes)
-        if not test:
-            cluster.add_new_node(new_total_nodes)
-            wait_time = 130
-            scale_logger.debug(
-                "Sleeping for %i seconds for the node to be ready for populating", wait_time)
-            time.sleep(wait_time)
-            populate(k8s)
-
-
-def resize_for_new_nodes_test(new_total_nodes, k8s, cluster):
-    resize_for_new_nodes(new_total_nodes, k8s, cluster, True)
-
-
-def scale(options):
-    """Update the nodes property based on scaling policy
-    and create new nodes if necessary"""
-
-    # ONLY GCE is supported for scaling at this time
-    cluster = gce_cluster_control(options)
-    if options.test_k8s:
-        k8s = k8s_control_test(options)
-    else:
-        k8s = k8s_control(options)
-
-    slack_logger.addHandler(slack_handler(options.slack_token))
-    if not options.slack_token:
-        scale_logger.info(
-            "No message will be sent to slack, since there is no token provided")
-
-    scale_logger.info("Scaling on cluster %s", k8s.get_cluster_name())
-
-    nodes = []  # a list of nodes that are NOT critical
-    for node in k8s.nodes:
-        if node.metadata.name not in k8s.critical_node_names:
-            nodes.append(node)
-
-    # Shuffle the node list so that when there are multiple nodes
-    # with same number of pods, they will be randomly picked to
-    # be made unschedulable
-    random.shuffle(nodes)
-
-    # goal is the total number of nodes we want in the cluster
-    goal = schedule_goal(k8s, options)
-
-    scale_logger.info("Total nodes in the cluster: %i", len(k8s.nodes))
-    scale_logger.info(
-        "%i nodes are unschedulable at this time", k8s.get_num_unschedulable())
-    scale_logger.info("Found %i critical nodes",
-                      len(k8s.nodes) - len(nodes))
-    scale_logger.info("Recommending total %i nodes for service", goal)
-
-    if confirm(("Updating unschedulable flags to ensure %i nodes are unschedulable" % max(len(k8s.nodes) - goal, 0))):
-        update_unschedulable(max(len(k8s.nodes) - goal, 0), nodes, k8s)
-
-    if goal > len(k8s.nodes):
-        scale_logger.info(
-            "Resize the cluster to %i nodes to satisfy the demand", goal)
-        if options.test_cloud:
-            resize_for_new_nodes_test(goal, k8s, cluster)
-        else:
-            slack_logger.info(
-                "Cluster resized to %i nodes to satisfy the demand", goal)
-            resize_for_new_nodes(goal, k8s, cluster)
-    if options.test_cloud:
-        shutdown_empty_nodes_test(nodes, k8s, cluster)
-    else:
-        # CRITICAL NODES SHOULD NOT BE SHUTDOWN
-        shutdown_empty_nodes(nodes, k8s, cluster)
 
 
 def main():
@@ -204,10 +105,114 @@ def main():
         options.context_cloud = args.context_for_cloud
     else:
         options.context_cloud = options.context
+
     try:
-        scale(options)
+        autoscaler = Autoscaler(options)
+        autoscaler.scale()
     except KeyboardInterrupt:
         pass
+
+
+class Autoscaler:
+    def __init__(self, options):
+        self._options = options
+        self._cluster = gce_cluster_control(options)
+
+        if options.test_k8s:
+            self._k8s = k8s_control_test(options)
+        else:
+            self._k8s = k8s_control(options)
+
+        self._add_slack_handler()
+
+    def scale(self):
+        """Update the nodes property based on scaling policy
+        and create new nodes if necessary"""
+
+        scale_logger.info("Scaling on cluster %s", self._k8s.get_cluster_name())
+
+        nodes = []  # a list of nodes that are NOT critical
+        for node in self._k8s.nodes:
+            if node.metadata.name not in self._k8s.critical_node_names:
+                nodes.append(node)
+
+        # Shuffle the node list so that when there are multiple nodes
+        # with same number of pods, they will be randomly picked to
+        # be made unschedulable
+        random.shuffle(nodes)
+
+        # goal is the total number of nodes we want in the cluster
+        goal = schedule_goal(self._k8s, self._options)
+
+        scale_logger.info("Total nodes in the cluster: %i", len(self._k8s.nodes))
+        scale_logger.info(
+            "%i nodes are unschedulable at this time", self._k8s.get_num_unschedulable())
+        scale_logger.info("Found %i critical nodes",
+                          len(self._k8s.nodes) - len(nodes))
+        scale_logger.info("Recommending total %i nodes for service", goal)
+
+        if confirm(("Updating unschedulable flags to ensure %i nodes are unschedulable" % max(len(self._k8s.nodes) - goal, 0))):
+            update_unschedulable(max(len(self._k8s.nodes) - goal, 0), nodes, self._k8s)
+
+        if goal > len(self._k8s.nodes):
+            scale_logger.info(
+                "Resize the cluster to %i nodes to satisfy the demand", goal)
+            if self._options.test_cloud:
+                self._resize_for_new_nodes_test(goal, self._k8s, self._cluster)
+            else:
+                slack_logger.info(
+                    "Cluster resized to %i nodes to satisfy the demand", goal)
+                self._resize_for_new_nodes(goal)
+        if self._options.test_cloud:
+            self._shutdown_empty_nodes_test(nodes)
+        else:
+            # CRITICAL NODES SHOULD NOT BE SHUTDOWN
+            self._shutdown_empty_nodes(nodes)
+
+    def _shutdown_empty_nodes(self, nodes, test=False):
+        """
+        Search through all nodes and shut down those that are unschedulable
+        and devoid of non-critical pods
+
+        CRITICAL NODES SHOULD NEVER BE INCLUDED IN THE INPUT LIST
+        """
+        count = 0
+        for node in nodes:
+            if self._k8s.get_pods_number_on_node(node) == 0 and node.spec.unschedulable:
+                if confirm(("Shutting down empty node: %s" % node.metadata.name)):
+                    scale_logger.info(
+                        "Shutting down empty node: %s", node.metadata.name)
+                    if not test:
+                        count += 1
+                        self._cluster.shutdown_specified_node(node.metadata.name)
+        if count > 0:
+            scale_logger.info("Shut down %d empty nodes", count)
+            slack_logger.info("Shut down %d empty nodes", count)
+
+    def _shutdown_empty_nodes_test(self, nodes):
+        self._shutdown_empty_nodes(nodes, True)
+
+    def _resize_for_new_nodes(self, new_total_nodes, test=False):
+        """create new nodes to match new_total_nodes required
+        only for scaling up"""
+        if confirm(("Resizing up to: %d nodes" % new_total_nodes)):
+            scale_logger.info("Resizing up to: %d nodes", new_total_nodes)
+            if not test:
+                self._cluster.add_new_node(new_total_nodes)
+                wait_time = 130
+                scale_logger.debug(
+                    "Sleeping for %i seconds for the node to be ready for populating", wait_time)
+                time.sleep(wait_time)
+                populate(self._k8s)
+
+    def _resize_for_new_nodes_test(self, new_total_nodes):
+        self._resize_for_new_nodes(new_total_nodes, True)
+
+    def _add_slack_handler(self):
+        slack_logger.addHandler(slack_handler(self._options.slack_token))
+        if not self._options.slack_token:
+            scale_logger.info(
+                "No message will be sent to slack, since there is no token provided")
 
 
 if __name__ == "__main__":
