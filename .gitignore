@@ -99,3 +99,4 @@ ENV/
 
 # mac osx
 .DS_Store
+tests/logs/
