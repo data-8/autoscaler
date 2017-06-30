@@ -10,20 +10,7 @@ scale_logger = logging.getLogger("scale")
 logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
 
-class cluster_control:
-    """Interface for cluster controller"""
-
-    def shutdown_specified_node(self, name):
-        pass
-
-    def add_new_node(self, cluster_size):
-        pass
-
-    def list_managed_instances(self):
-        pass
-
-
-class gce_cluster_control(cluster_control):
+class gce_cluster_control(object):
 
     """Abstracts cluster scaling logic. Currently will
     default and interact with the Data8 cluster using
