@@ -132,8 +132,8 @@ class Autoscaler:
         scale_logger.info("Scaling on cluster %s", self._k8s.get_cluster_name())
 
         nodes = []  # a list of nodes that are NOT critical
-        for node in self._k8s.nodes:
-            if node.metadata.name not in self._k8s.critical_node_names:
+        for node in self._k8s.get_nodes():
+            if node.metadata.name not in self._k8s.get_critical_node_names():
                 nodes.append(node)
 
         # Shuffle the node list so that when there are multiple nodes
@@ -144,17 +144,17 @@ class Autoscaler:
         # goal is the total number of nodes we want in the cluster
         goal = schedule_goal(self._k8s, self._options)
 
-        scale_logger.info("Total nodes in the cluster: %i", len(self._k8s.nodes))
+        scale_logger.info("Total nodes in the cluster: %i", len(self._k8s.get_nodes()))
         scale_logger.info(
             "%i nodes are unschedulable at this time", self._k8s.get_num_unschedulable())
         scale_logger.info("Found %i critical nodes",
-                          len(self._k8s.nodes) - len(nodes))
+                          len(self._k8s.get_nodes()) - len(nodes))
         scale_logger.info("Recommending total %i nodes for service", goal)
 
-        if confirm(("Updating unschedulable flags to ensure %i nodes are unschedulable" % max(len(self._k8s.nodes) - goal, 0))):
-            update_unschedulable(max(len(self._k8s.nodes) - goal, 0), nodes, self._k8s)
+        if confirm(("Updating unschedulable flags to ensure %i nodes are unschedulable" % max(len(self._k8s.get_nodes()) - goal, 0))):
+            update_unschedulable(max(len(self._k8s.get_nodes()) - goal, 0), nodes, self._k8s)
 
-        if goal > len(self._k8s.nodes):
+        if goal > len(self._k8s.get_nodes()):
             scale_logger.info(
                 "Resize the cluster to %i nodes to satisfy the demand", goal)
             if self._options.test_cloud:
