@@ -6,7 +6,7 @@ All functions in the file should be read-only and cause no side effects."""
 
 import logging
 
-from utils import get_node_memory_capacity
+from .utils import get_node_memory_capacity
 scale_logger = logging.getLogger("scale")
 
 

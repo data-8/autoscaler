@@ -1,6 +1,6 @@
 import logging
 
-from utils import populate_pods
+from .utils import populate_pods
 
 scale_logger = logging.getLogger("scale")
 

@@ -1,15 +1,6 @@
 import pytest
 from autoscaler import utils
-from .testing_utils import check_expected
-
-
-# from https://goodcode.io/articles/python-dict-object/
-class objdict(dict):
-    def __getattr__(self, name):
-        if name in self:
-            return self[name]
-        else:
-            raise AttributeError("No such attribute: " + name)
+from .testing_utils import check_expected, objdict
 
 
 class TestUtil(object):

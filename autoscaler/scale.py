@@ -7,15 +7,15 @@ import argparse
 import random
 import time
 
-from workload import schedule_goal
-from update_nodes import update_unschedulable
-from cluster_update import gce_cluster_control
-from settings import settings
-from utils import user_confirm as confirm
-from kubernetes_control import k8s_control
-from kubernetes_control_test import k8s_control_test
-from slack_message import slack_handler
-from populate import populate
+from .workload import schedule_goal
+from .update_nodes import update_unschedulable
+from .cluster_update import gce_cluster_control
+from .settings import settings
+from .utils import user_confirm as confirm
+from .kubernetes_control import k8s_control
+from .kubernetes_control_test import k8s_control_test
+from .slack_message import slack_handler
+from .populate import populate
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s')
