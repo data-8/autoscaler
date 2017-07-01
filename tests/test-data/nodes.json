@@ -25,7 +25,7 @@
                 "uid": "5d3e31aa-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": true,
                 "externalID": "8095938352225820600",
                 "podCIDR": "10.44.4.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-0zc0"
@@ -212,7 +212,7 @@
                 "uid": "5c6fd758-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "2427549405270876088",
                 "podCIDR": "10.44.0.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-17c7"
@@ -399,7 +399,7 @@
                 "uid": "5d66e01e-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "3396404850842509240",
                 "podCIDR": "10.44.5.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-2zbs"
@@ -574,7 +574,7 @@
                 "uid": "5cb022d3-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "2850962360940732344",
                 "podCIDR": "10.44.1.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-8pbd"
@@ -744,7 +744,7 @@
                 "uid": "5cde026c-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "6481763829912018872",
                 "podCIDR": "10.44.2.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-f31s"
@@ -925,7 +925,7 @@
                 "uid": "5f3caaa3-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "1930942132338663352",
                 "podCIDR": "10.44.10.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-j3m8"
@@ -1112,7 +1112,7 @@
                 "uid": "633abcd1-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "6772505499211505592",
                 "podCIDR": "10.44.12.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-kz7z"
@@ -1267,7 +1267,7 @@
                 "uid": "5e1994d7-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "2300024318649802680",
                 "podCIDR": "10.44.8.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-n3wb"
@@ -1437,7 +1437,7 @@
                 "uid": "5df02f27-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "768090981171044280",
                 "podCIDR": "10.44.7.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-nxzf"
@@ -1618,7 +1618,7 @@
                 "uid": "5f89299f-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "8604185699494764472",
                 "podCIDR": "10.44.11.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-q8g0"
@@ -1788,7 +1788,7 @@
                 "uid": "5e4bbf70-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "7699367194104274872",
                 "podCIDR": "10.44.9.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-qgpb"
@@ -1963,7 +1963,7 @@
                 "uid": "5d2f3509-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "8193273143060701112",
                 "podCIDR": "10.44.3.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-tfrz"
@@ -2143,7 +2143,7 @@
                 "uid": "5da748d9-5785-11e7-a7c8-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "2173041905441546168",
                 "podCIDR": "10.44.6.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-v0kp"
@@ -2298,7 +2298,7 @@
                 "uid": "6223e453-3514-11e7-8de1-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "7551758672901170735",
                 "podCIDR": "10.44.14.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-wvjl"
@@ -2541,7 +2541,7 @@
                 "uid": "631f9582-3514-11e7-8de1-42010af0002a"
             },
             "spec": {
-                "unschedulable": "False",
+                "unschedulable": false,
                 "externalID": "8408403029803394640",
                 "podCIDR": "10.44.21.0/24",
                 "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-0df1a536-wwk5"
@@ -2558,6 +2558,284 @@
                     },
                     {
                         "address": "gke-prod-highmem-pool-0df1a536-wwk5",
+                        "type": "Hostname"
+                    }
+                ],
+                "allocatable": {
+                    "alpha.kubernetes.io/nvidia-gpu": "0",
+                    "cpu": "2",
+                    "memory": "13317664Ki",
+                    "pods": "110"
+                },
+                "capacity": {
+                    "alpha.kubernetes.io/nvidia-gpu": "0",
+                    "cpu": "2",
+                    "memory": "13317664Ki",
+                    "pods": "110"
+                },
+                "conditions": [
+                    {
+                        "lastHeartbeatTime": "2017-05-10T00:06:10Z",
+                        "lastTransitionTime": "2017-05-10T00:06:10Z",
+                        "message": "RouteController created a route",
+                        "reason": "RouteCreated",
+                        "status": "False",
+                        "type": "NetworkUnavailable"
+                    },
+                    {
+                        "lastHeartbeatTime": "2017-06-30T19:15:35Z",
+                        "lastTransitionTime": "2017-05-10T00:05:33Z",
+                        "message": "kubelet has sufficient disk space available",
+                        "reason": "KubeletHasSufficientDisk",
+                        "status": "False",
+                        "type": "OutOfDisk"
+                    },
+                    {
+                        "lastHeartbeatTime": "2017-06-30T19:15:35Z",
+                        "lastTransitionTime": "2017-05-10T00:05:33Z",
+                        "message": "kubelet has sufficient memory available",
+                        "reason": "KubeletHasSufficientMemory",
+                        "status": "False",
+                        "type": "MemoryPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2017-06-30T19:15:35Z",
+                        "lastTransitionTime": "2017-05-10T00:05:33Z",
+                        "message": "kubelet has no disk pressure",
+                        "reason": "KubeletHasNoDiskPressure",
+                        "status": "False",
+                        "type": "DiskPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2017-06-30T19:15:35Z",
+                        "lastTransitionTime": "2017-05-10T00:05:53Z",
+                        "message": "kubelet is posting ready status. AppArmor enabled",
+                        "reason": "KubeletReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "daemonEndpoints": {
+                    "kubeletEndpoint": {
+                        "Port": 10250
+                    }
+                },
+                "images": [
+                    {
+                        "names": [
+                            "gcr.io/data-8/jupyterhub-k8s-user-stat28:36b2c48"
+                        ],
+                        "sizeBytes": 5695023067
+                    },
+                    {
+                        "names": [
+                            "gcr.io/data-8/jupyterhub-k8s-user-datahub:b1ded78"
+                        ],
+                        "sizeBytes": 5039711380
+                    },
+                    {
+                        "names": [
+                            "gcr.io/data-8/jupyterhub-k8s-user-prob140:36b2c48"
+                        ],
+                        "sizeBytes": 5037787764
+                    },
+                    {
+                        "names": [
+                            "gcr.io/data-8/jupyterhub-k8s-user-demo:e283f2f"
+                        ],
+                        "sizeBytes": 1377023691
+                    },
+                    {
+                        "names": [
+                            "yuvipanda/jupyterhub-k8s-hub:v94ff73b"
+                        ],
+                        "sizeBytes": 505222458
+                    },
+                    {
+                        "names": [
+                            "yuvipanda/jupyterhub-k8s-hub:v0.2"
+                        ],
+                        "sizeBytes": 504660430
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/fluentd-gcp:1.28.1"
+                        ],
+                        "sizeBytes": 328351788
+                    },
+                    {
+                        "names": [
+                            "gcr.io/data-8/jupyterhub-k8s-proxy:8bc523b"
+                        ],
+                        "sizeBytes": 267538966
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/heapster:v1.2.0"
+                        ],
+                        "sizeBytes": 177836395
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/kube-proxy:697a993392e4f1c74fc6879c59c068e6"
+                        ],
+                        "sizeBytes": 173531383
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.0"
+                        ],
+                        "sizeBytes": 88896666
+                    },
+                    {
+                        "names": [
+                            "prom/prometheus:v1.5.2"
+                        ],
+                        "sizeBytes": 79601765
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/cluster-proportional-autoscaler-amd64:1.1.0-r2"
+                        ],
+                        "sizeBytes": 47349029
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/kubedns-amd64:1.9"
+                        ],
+                        "sizeBytes": 46998769
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/kube-state-metrics:v0.4.1"
+                        ],
+                        "sizeBytes": 45663385
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/addon-resizer:1.7"
+                        ],
+                        "sizeBytes": 38983736
+                    },
+                    {
+                        "names": [
+                            "prom/alertmanager:v0.5.1"
+                        ],
+                        "sizeBytes": 15738195
+                    },
+                    {
+                        "names": [
+                            "prom/node-exporter:v0.13.0"
+                        ],
+                        "sizeBytes": 14556305
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/dnsmasq-metrics-amd64:1.0.1"
+                        ],
+                        "sizeBytes": 13183180
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/exechealthz-amd64:1.2"
+                        ],
+                        "sizeBytes": 8374840
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/defaultbackend:1.0"
+                        ],
+                        "sizeBytes": 7510068
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/kube-dnsmasq-amd64:1.4.1"
+                        ],
+                        "sizeBytes": 5134257
+                    },
+                    {
+                        "names": [
+                            "jimmidyson/configmap-reload:v0.1"
+                        ],
+                        "sizeBytes": 4780960
+                    },
+                    {
+                        "names": [
+                            "gcr.io/google_containers/pause-amd64:3.0"
+                        ],
+                        "sizeBytes": 746888
+                    }
+                ],
+                "nodeInfo": {
+                    "architecture": "amd64",
+                    "bootID": "80bbf615-7e48-4606-94a4-5a0e18921c7d",
+                    "containerRuntimeVersion": "docker://1.11.2",
+                    "kernelVersion": "4.4.21+",
+                    "kubeProxyVersion": "v1.5.2",
+                    "kubeletVersion": "v1.5.2",
+                    "machineID": "794dbc33cc8276eac13ed0f167a79121",
+                    "operatingSystem": "linux",
+                    "osImage": "Google Container-VM Image",
+                    "systemUUID": "794DBC33-CC82-76EA-C13E-D0F167A79121"
+                },
+                "volumesAttached": [
+                    {
+                        "devicePath": "/dev/disk/by-id/google-gke-prod-49ca6b0d-dyna-pvc-04fe4505-2936-11e7-b551-42010af0002a",
+                        "name": "kubernetes.io/gce-pd/gke-prod-49ca6b0d-dyna-pvc-04fe4505-2936-11e7-b551-42010af0002a"
+                    },
+                    {
+                        "devicePath": "/dev/disk/by-id/google-gke-prod-49ca6b0d-dyna-pvc-04fedb8a-2936-11e7-b551-42010af0002a",
+                        "name": "kubernetes.io/gce-pd/gke-prod-49ca6b0d-dyna-pvc-04fedb8a-2936-11e7-b551-42010af0002a"
+                    }
+                ],
+                "volumesInUse": [
+                    "kubernetes.io/gce-pd/gke-prod-49ca6b0d-dyna-pvc-04fedb8a-2936-11e7-b551-42010af0002a",
+                    "kubernetes.io/gce-pd/gke-prod-49ca6b0d-dyna-pvc-04fe4505-2936-11e7-b551-42010af0002a"
+                ]
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Node",
+            "metadata": {
+                "annotations": {
+                    "scheduler.alpha.kubernetes.io/taints": "[]",
+                    "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+                },
+                "creationTimestamp": "2017-06-10T00:05:33Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "n1-highmem-2",
+                    "beta.kubernetes.io/os": "linux",
+                    "cloud.google.com/gke-nodepool": "highmem-pool",
+                    "failure-domain.beta.kubernetes.io/region": "us-central1",
+                    "failure-domain.beta.kubernetes.io/zone": "us-central1-a",
+                    "kubernetes.io/hostname": "gke-prod-highmem-pool-custom-wwk5"
+                },
+                "name": "gke-prod-highmem-pool-custom-wwk5",
+                "namespace": "",
+                "resourceVersion": "63739590",
+                "selfLink": "/api/v1/nodesgke-prod-highmem-pool-custom-wwk5",
+                "uid": "631f9582-3514-11e7-8de1-42010af0002a"
+            },
+            "spec": {
+                "unschedulable": false,
+                "externalID": "8408403029803394640",
+                "podCIDR": "10.44.21.0/24",
+                "providerID": "gce://data-8/us-central1-a/gke-prod-highmem-pool-custom-wwk5"
+            },
+            "status": {
+                "addresses": [
+                    {
+                        "address": "10.128.0.11",
+                        "type": "InternalIP"
+                    },
+                    {
+                        "address": "35.188.39.251",
+                        "type": "ExternalIP"
+                    },
+                    {
+                        "address": "gke-prod-highmem-pool-custom-wwk5",
                         "type": "Hostname"
                     }
                 ],

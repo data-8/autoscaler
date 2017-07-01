@@ -50,8 +50,8 @@ class TestKubernetesControl:
         assert len(self._k8s._get_pods()) == 28
 
     def test_get_nodes(self):
-        assert len(self._k8s._get_nodes()) == 15
-        assert len(self._k8s.get_nodes()) == 15
+        assert len(self._k8s._get_nodes()) == 16
+        assert len(self._k8s.get_nodes()) == 16
 
     def test_get_critical_node_names(self):
         check_expected(self._k8s.get_critical_node_names, [], list, [
@@ -127,19 +127,19 @@ class TestKubernetesControl:
         assert str(k8s._v1.new_nodes[node_name]) == expected
 
     def test_get_total_cluster_memory_usage(self):
-        check_expected(self._k8s.get_total_cluster_memory_usage, [], int, 0)
+        check_expected(self._k8s.get_total_cluster_memory_usage, [], int, 33822867456)
 
     def test_get_total_cluster_memory_capacity(self):
-        check_expected(self._k8s.get_total_cluster_memory_capacity, [], int, 0)
+        check_expected(self._k8s.get_total_cluster_memory_capacity, [], int, 204559319040)
 
     def test_get_cluster_name(self):
         check_expected(self._k8s.get_cluster_name, [], str, 'prod')
 
     def test_get_num_schedulable(self):
-        check_expected(self._k8s.get_num_schedulable, [], int, 0)
+        check_expected(self._k8s.get_num_schedulable, [], int, 1)
 
     def test_get_num_unschedulable(self):
-        check_expected(self._k8s.get_num_unschedulable, [], int, 15)
+        check_expected(self._k8s.get_num_unschedulable, [], int, 1)
 
     def test_is_test(self):
         self._k8s._test = True
@@ -159,24 +159,25 @@ class TestKubernetesControl:
         assert out == """\
 Node name \t\t Num of pods on node \t Schedulable? \t Preemptible?
 gke-prod-highmem-pool-0df1a536-0zc0\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-17c7\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-2zbs\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-8pbd\t1\tU\tN
-gke-prod-highmem-pool-0df1a536-f31s\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-j3m8\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-kz7z\t1\tU\tN
-gke-prod-highmem-pool-0df1a536-n3wb\t1\tU\tN
-gke-prod-highmem-pool-0df1a536-nxzf\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-q8g0\t1\tU\tN
-gke-prod-highmem-pool-0df1a536-qgpb\t1\tU\tN
-gke-prod-highmem-pool-0df1a536-tfrz\t2\tU\tN
-gke-prod-highmem-pool-0df1a536-v0kp\t1\tU\tN
-gke-prod-highmem-pool-0df1a536-wvjl\t6\tU\tN
-gke-prod-highmem-pool-0df1a536-wwk5\t2\tU\tN
+gke-prod-highmem-pool-0df1a536-17c7\t2\tS\tN
+gke-prod-highmem-pool-0df1a536-2zbs\t2\tS\tN
+gke-prod-highmem-pool-0df1a536-8pbd\t1\tS\tN
+gke-prod-highmem-pool-0df1a536-f31s\t2\tS\tN
+gke-prod-highmem-pool-0df1a536-j3m8\t2\tS\tN
+gke-prod-highmem-pool-0df1a536-kz7z\t1\tS\tN
+gke-prod-highmem-pool-0df1a536-n3wb\t1\tS\tN
+gke-prod-highmem-pool-0df1a536-nxzf\t2\tS\tN
+gke-prod-highmem-pool-0df1a536-q8g0\t1\tS\tN
+gke-prod-highmem-pool-0df1a536-qgpb\t1\tS\tN
+gke-prod-highmem-pool-0df1a536-tfrz\t2\tS\tN
+gke-prod-highmem-pool-0df1a536-v0kp\t1\tS\tN
+gke-prod-highmem-pool-0df1a536-wvjl\t6\tS\tN
+gke-prod-highmem-pool-0df1a536-wwk5\t2\tS\tN
+gke-prod-highmem-pool-custom-wwk5\t0\tS\tP
 """
 
     def test_get_pods_number_on_node(self):
-        pods_number = [2, 2, 2, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 6, 2]
+        pods_number = [2, 2, 2, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 6, 2, 0]
         i = 0
         for node in self._k8s.get_nodes():
             assert self._k8s.get_pods_number_on_node(node) == pods_number[i]

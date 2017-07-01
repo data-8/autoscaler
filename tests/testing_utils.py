@@ -22,7 +22,10 @@ def check_expected(f, test_inputs, expected_class, expected):
 
 # from: https://stackoverflow.com/questions/6578986/how-to-convert-json-data-into-a-python-object
 def _json_object_hook(d):
-    return namedtuple('X', d.keys(), rename=True)(*d.values())
+    if "memory" in d.keys():
+        return d
+    else:
+        return namedtuple('X', d.keys(), rename=True)(*d.values())
 
 
 def json_to_object(file_name):
