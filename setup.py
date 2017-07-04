@@ -26,7 +26,7 @@ setup(
     install_requires=dependencies,
     entry_points={
         'console_scripts': [
-            'autoscaler = autoscaler.scale:main',
+            'autoscaler = autoscaler.main:main',
         ],
     },
     classifiers=[
