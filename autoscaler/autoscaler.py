@@ -48,7 +48,7 @@ class Autoscaler:
         scale_logger.info("Recommending total %i nodes for service", self._goal)
 
         if confirm(("Updating unschedulable flags to ensure %i nodes are unschedulable" % max(len(self._k8s.get_nodes()) - self._goal, 0))):
-            self._update_unschedulable(self._non_critical_nodes)
+            self._update_unschedulable()
 
         if self._goal > len(self._k8s.get_nodes()):
             scale_logger.info(
@@ -136,7 +136,7 @@ class Autoscaler:
             updated.append(node.metadata.name)
         return updated
 
-    def _update_unschedulable(self, nodes, calculate_priority=None):
+    def _update_unschedulable(self, calculate_priority=None):
         """Attempt to make sure given number of
         nodes are blocked, if possible;
         return number of nodes newly blocked; negative
@@ -167,7 +167,7 @@ class Autoscaler:
 
         # Analyze nodes status and establish blocking priority
         for count in range(len(self._non_critical_nodes)):
-            if nodes[count].spec.unschedulable:
+            if self._non_critical_nodes[count].spec.unschedulable:
                 unschedulable_nodes.append(self._non_critical_nodes[count])
             else:
                 schedulable_nodes.append(self._non_critical_nodes[count])
