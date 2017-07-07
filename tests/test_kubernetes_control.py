@@ -50,8 +50,8 @@ class TestKubernetesControl:
         assert len(self._k8s._get_pods()) == 28
 
     def test_get_nodes(self):
-        assert len(self._k8s._get_nodes()) == 16
-        assert len(self._k8s.get_nodes()) == 16
+        assert len(self._k8s._get_nodes()) == 17
+        assert len(self._k8s.get_nodes()) == 17
 
     def test_get_critical_node_names(self):
         check_expected(self._k8s.get_critical_node_names, [], list, [
@@ -139,7 +139,7 @@ class TestKubernetesControl:
         check_expected(self._k8s.get_num_schedulable, [], int, 1)
 
     def test_get_num_unschedulable(self):
-        check_expected(self._k8s.get_num_unschedulable, [], int, 1)
+        check_expected(self._k8s.get_num_unschedulable, [], int, 2)
 
     def test_is_test(self):
         self._k8s._test = True
@@ -174,10 +174,11 @@ gke-prod-highmem-pool-0df1a536-v0kp\t1\tS\tN
 gke-prod-highmem-pool-0df1a536-wvjl\t6\tS\tN
 gke-prod-highmem-pool-0df1a536-wwk5\t2\tS\tN
 gke-prod-highmem-pool-custom-wwk5\t0\tS\tP
+gke-prod-highmem-pool-custom-wwk6\t0\tU\tP
 """
 
     def test_get_pods_number_on_node(self):
-        pods_number = [2, 2, 2, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 6, 2, 0]
+        pods_number = [2, 2, 2, 1, 2, 2, 1, 1, 2, 1, 1, 2, 1, 6, 2, 0, 0]
         i = 0
         for node in self._k8s.get_nodes():
             assert self._k8s.get_pods_number_on_node(node) == pods_number[i]

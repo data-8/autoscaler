@@ -104,14 +104,15 @@ class Autoscaler:
     def _shutdown_empty_nodes_test(self):
         self._shutdown_empty_nodes(self._non_critical_nodes, True)
 
-    def _resize_for_new_nodes(self, test=False):
+    def _resize_for_new_nodes(self, test=False, wait_time=None):
         """create new nodes to match self._goal required
         only for scaling up"""
         if confirm(("Resizing up to: %d nodes" % self._goal)):
             scale_logger.info("Resizing up to: %d nodes", self._goal)
             if not test:
                 self._cluster.add_new_node(self._goal)
-                wait_time = 130
+                if not wait_time and wait_time != 0:
+                    wait_time = 130
                 scale_logger.debug(
                     "Sleeping for %i seconds for the node to be ready for populating", wait_time)
                 time.sleep(wait_time)
