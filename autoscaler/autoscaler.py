@@ -102,7 +102,7 @@ class Autoscaler:
             slack_logger.info("Shut down %d empty nodes", count)
 
     def _shutdown_empty_nodes_test(self):
-        self._shutdown_empty_nodes(self._non_critical_nodes, True)
+        self._shutdown_empty_nodes(True)
 
     def _resize_for_new_nodes(self, test=False, wait_time=None):
         """create new nodes to match self._goal required

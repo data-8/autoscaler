@@ -182,3 +182,13 @@ ty={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', '
     def test_shutdown_empty_nodes(self):
         self._autoscaler._shutdown_empty_nodes()
         assert self._autoscaler._cluster.shutdown_nodes == ['gke-prod-highmem-pool-custom-wwk6']
+
+    def test_scale(self):
+        autoscaler_settings = settings.settings()
+        autoscaler_settings.test_cloud = False
+        self._autoscaler = AutoscalerTest(autoscaler_settings)
+        autoscaler.populate = lambda x: None
+        autoscaler.confirm = lambda x: True
+        self._autoscaler.scale()
+        assert self._autoscaler._cluster.goals == []
+        assert self._autoscaler._cluster.shutdown_nodes == ['gke-prod-highmem-pool-custom-wwk6']
