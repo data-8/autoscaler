@@ -147,6 +147,13 @@ table={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki'
 acity={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'})), X\
 (metadata=X(name='gke-prod-highmem-pool-custom-wwk6'), spec=X(unschedulable=True), status=X(allocatab\
 le={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, capaci\
+ty={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}))]"""\
+        or str(result) == """\
+[X(metadata=X(name='gke-prod-highmem-pool-custom-wwk6'), spec=X(unschedulable=True), status=X(alloca\
+table={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, cap\
+acity={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'})), X\
+(metadata=X(name='gke-prod-highmem-pool-custom-wwk5'), spec=X(unschedulable=False), status=X(allocatab\
+le={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, capaci\
 ty={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}))]"""
 
     def test_update_non_critical_node_list(self):
@@ -156,6 +163,13 @@ ty={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', '
 table={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, cap\
 acity={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'})), X\
 (metadata=X(name='gke-prod-highmem-pool-custom-wwk6'), spec=X(unschedulable=True), status=X(allocatab\
+le={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, capaci\
+ty={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}))]"""\
+        or str(self._autoscaler._non_critical_nodes) == """\
+[X(metadata=X(name='gke-prod-highmem-pool-custom-wwk6'), spec=X(unschedulable=True), status=X(alloca\
+table={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, cap\
+acity={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'})), X\
+(metadata=X(name='gke-prod-highmem-pool-custom-wwk5'), spec=X(unschedulable=False), status=X(allocatab\
 le={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}, capaci\
 ty={'alpha.kubernetes.io/nvidia-gpu': '0', 'cpu': '2', 'memory': '13317664Ki', 'pods': '110'}))]"""
 
