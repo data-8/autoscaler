@@ -27,6 +27,7 @@ class k8s_control:
     def __init__(self, options):
         """ Needs to be initialized with options as an
         instance of settings"""
+
         self._context = self._configure_new_context(options.context)
         self._options = options
         self._v1 = client.CoreV1Api()
@@ -157,8 +158,7 @@ class k8s_control:
         return self._context
 
     def get_num_schedulable(self):
-        """Return number of nodes schedulable AND NOT
-        IN THE LIST OF CRITICAL NODES"""
+        """Return number of nodes schedulable"""
         result = 0
         for node in self._noncritical_nodes:
             if not node.spec.unschedulable:

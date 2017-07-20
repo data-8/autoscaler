@@ -3,8 +3,8 @@
 """Kubernetes API access functions"""
 
 import logging
-import os
 import subprocess
+import os
 
 scale_logger = logging.getLogger("scale")
 logging.getLogger("kubernetes").setLevel(logging.WARNING)
