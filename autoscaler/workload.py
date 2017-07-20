@@ -6,7 +6,7 @@ All functions in the file should be read-only and cause no side effects."""
 
 import logging
 
-from utils import get_node_memory_capacity
+from .utils import get_node_memory_capacity
 scale_logger = logging.getLogger("scale")
 
 
@@ -28,18 +28,18 @@ def schedule_goal(k8s, options):
     """Return the goal number of schedulable nodes, including nodes running
     critical pods, given the current situation"""
     scale_logger.info("Current scheduling target: %f ~ %f",
-                      k8s.options.min_utilization, k8s.options.max_utilization)
+                      k8s.get_min_utilization(), k8s.get_max_utilization())
 
     current_utilization = get_effective_utilization(k8s)
     scale_logger.info("Current cluster utilization is %f", current_utilization)
 
     if current_utilization >= options.min_utilization and current_utilization <= options.max_utilization:
         # leave unchanged
-        return len(k8s.nodes) - k8s.get_num_unschedulable()
+        return len(k8s.get_nodes()) - k8s.get_num_unschedulable()
     else:
         # need to scale down or up
         required_num = k8s.get_total_cluster_memory_usage(
-        ) / options.optimal_utilization / get_node_memory_capacity(k8s.nodes[0])
+        ) / options.optimal_utilization / get_node_memory_capacity(k8s.get_nodes()[0])
 
         minimum_nodes = options.min_nodes
         maximum_nodes = options.max_nodes
