@@ -1,8 +1,10 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 
 """Kubernetes API access functions"""
 
 import logging
+import subprocess
+import os
 
 scale_logger = logging.getLogger("scale")
 logging.getLogger("kubernetes").setLevel(logging.WARNING)
@@ -38,7 +40,7 @@ def get_pod_memory_request(pod):
 
 
 def get_node_memory_capacity(node):
-    """Converts the specific memory entry 
+    """Converts the specific memory entry
     of the kubernetes API into the byte capacity"""
     return convert_size(node.status.capacity['memory'])
 
@@ -111,20 +113,27 @@ def check_list_intersection(list1, list2):
     return len(set(list1).intersection(set(list2))) != 0
 
 
-def user_confirm(prompt=None, resp=False):
-    """prompts for yes or no response from the user. Returns True for yes and
+def populate_pods(pool_name, url):
+    """Populate the given url image to the specified gcloud pool"""
+    """TODO: Should depreciate this and include populate code in autoscaler"""
+    cmd = [_get_populate_script_location(), pool_name, url]
+    subprocess.check_call(cmd)
+
+
+def user_confirm(prompt=None, default_response=False):
+    """prompts for yes or no reponse from the user. Returns True for yes and
     False for no.
 
-    'resp' should be set to the default value assumed by the caller when
+    'default_response' should be set to the default value assumed by the caller when
     user simply types ENTER.
 
-    >>> confirm(prompt='Create Directory?', resp=True)
-    Create Directory? [y]|n: 
+    >>> confirm(prompt='Create Directory?', default_response=True)
+    Create Directory? [y]|n:
     True
-    >>> confirm(prompt='Create Directory?', resp=False)
-    Create Directory? [n]|y: 
+    >>> confirm(prompt='Create Directory?', default_response=False)
+    Create Directory? [n]|y:
     False
-    >>> confirm(prompt='Create Directory?', resp=False)
+    >>> confirm(prompt='Create Directory?', default_response=False)
     Create Directory? [n]|y: y
     True
 
@@ -133,19 +142,23 @@ def user_confirm(prompt=None, resp=False):
     if prompt is None:
         prompt = 'Confirm'
 
-    if resp:
+    if default_response:
         prompt = '%s [%s/%s] ' % (prompt, 'Y', 'n')
     else:
-        prompt = '%s [%s/%s]  ' % (prompt, 'y', 'N')
+        prompt = '%s [%s/%s] ' % (prompt, 'y', 'N')
 
     while True:
-        ans = input(prompt)
-        if not ans:
-            return resp
-        if ans not in ['y', 'Y', 'n', 'N']:
-            print('please enter y or n.')
+        answer = input(prompt)
+        if not answer:
+            return default_response
+        if answer not in ['y', 'Y', 'n', 'N']:
+            print('Please enter y or n.')
             continue
-        if ans == 'y' or ans == 'Y':
+        if answer == 'y' or answer == 'Y':
             return True
-        if ans == 'n' or ans == 'N':
+        else:
             return False
+
+
+def _get_populate_script_location():
+    return os.path.join(os.getcwd(), 'populate.bash')

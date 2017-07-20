@@ -24,7 +24,6 @@ scale_logger.info(
     "Can support cluster scaling on providers: %s", supported_platform)
 
 
-
 class abstract_cluster_control:
 
     def __init__(self, options):
@@ -210,7 +209,7 @@ class gce_cluster_control(abstract_cluster_control):
             size=cluster_size).execute()
 
     def list_managed_instances(self):
-        """Lists the instances a part of the 
+        """Lists the instances a part of the
         specified cluster group"""
         scale_logger.debug("Gathering group: %s managed instances", self.group)
         result = self.compute.instanceGroupManagers().listManagedInstances(

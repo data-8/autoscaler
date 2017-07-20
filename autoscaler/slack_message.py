@@ -8,7 +8,7 @@ import logging
 
 class slack_handler(logging.Handler):
 
-    def __init__(self, token, channel="C3KJJMFKP", username="autoscaler"):
+    def __init__(self, token, channel="C510S0Z2L", username="blueprint-cluster"):
         logging.Handler.__init__(self, level=logging.INFO)
         self.token = token
         self.channel = channel
